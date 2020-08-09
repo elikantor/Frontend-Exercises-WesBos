@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>This</title>
+</head>
+<body>
+
+<script>
+
+classic1 = () => {
+    console.log(this)
+}
+classic1()
+
+classic2 = () => {
+    'use string'
+    console.log(this)
+}
+classic2()
+
+const classic = {
+    name: "Eli",
+    test: function (){
+        console.log(this, this.name)
+    }
+}
+classic.test()
+
+const obj = {
+    name: "Eli",
+    test: function () {
+        console.log(this, this.name)
+    }
+}
+obj.test()
+
+
+
+</script>
+
+</body>
+</html>
