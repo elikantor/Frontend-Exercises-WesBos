@@ -183,21 +183,37 @@
   </ul>
 <script>
 
-    const videos = document.querySelectorAll('li')
-    let minutes = 0
-    let seconds = 0
+    const videos = Array.from(document.querySelectorAll('[data-time]'))
 
-    videos.forEach(video => {
-        let time = video.dataset.time.split(":")
-        minutes += Number(time[0])
-        seconds += Number(time[1])
-    })
-    minutes += seconds / 60
-    seconds = seconds % 60
+    let time = videos
+        .map(video => video.dataset.time)
+        .map(timecode => {
+            const [mins, seconds] = timecode.split(":").map(parseFloat)
+            return mins * 60 + seconds
+        })
+        .reduce((total, seconds) => total + seconds)
 
-    let hours = Math.floor(minutes / 60)
-    minutes = Math.round(minutes % 60)
-    console.log(hours.toString() + ":" + minutes.toString() + ":" + seconds.toString())
+    const hours = Math.floor(time / 3600)
+    time = time % 3600
+    minutes = Math.floor(time / 60)
+    time = time % 60
+    console.log(hours.toString() + ":" + minutes.toString() + ":" + time.toString())
+    
+
+
+    // let minutes = 0
+
+    // videos.forEach(video => {
+    //     let time = video.dataset.time.split(":")
+    //     minutes += Number(time[0])
+    //     seconds += Number(time[1])
+    // })
+    // minutes += seconds / 60
+    // seconds = seconds % 60
+
+    // let hours = Math.floor(minutes / 60)
+    // minutes = Math.round(minutes % 60)
+    // console.log(hours.toString() + ":" + minutes.toString() + ":" + seconds.toString())
 
 
 
