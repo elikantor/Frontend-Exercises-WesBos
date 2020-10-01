@@ -2,7 +2,6 @@ const buttons = document.querySelectorAll('button')
 const form = document.querySelector('form')
 const timeLeft = document.querySelector('.display__time-left')
 const endTime = document.querySelector('.display__end-time')
-let timer = false
 let interval
 
 function startTimer(e, seconds) {
@@ -13,45 +12,19 @@ function startTimer(e, seconds) {
     let secs = time % 60 > 9 ? time % 60 : '0' + time % 60
     timeLeft.innerText = `${minutes}:${secs}`
     document.title = `${minutes}:${secs}`
-    if(!timer) {
-        timer = true
-        interval = setInterval(function(){
-            if(time) {
-                if(secs === '00' && minutes > 0) {
-                    minutes--
-                    secs = 59
-                } else {
-                    secs--
-                }
-                time--
-                secs = time % 60 > 9 ? time % 60 : '0' + time % 60
-                timeLeft.innerText = `${minutes}:${secs}`
-                document.title = `${minutes}:${secs}`
-            } else {
-                clearInterval(interval)
-                timer = false
-            }
-        }, 1000)
-    } else {
-        clearInterval(interval)
-        interval = setInterval(function(){
-            if(time) {
-                if(secs === '00' && minutes > 0) {
-                    minutes--
-                    secs = 59
-                } else {
-                    secs--
-                }
-                time--
-                secs = time % 60 > 9 ? time % 60 : '0' + time % 60
-                timeLeft.innerText = `${minutes}:${secs}`
-                document.title = `${minutes}:${secs}`
-            } else {
-                clearInterval(interval)
-                timer = false
-            }
-        }, 1000)
-    }
+    clearInterval(interval)
+    interval = setInterval(function(){
+        if(secs === '00' && minutes > 0) {
+            minutes--
+            secs = 59
+        } else {
+            secs--
+        }
+        time--
+        secs = time % 60 > 9 ? time % 60 : '0' + time % 60
+        timeLeft.innerText = `${minutes}:${secs}`
+        document.title = `${minutes}:${secs}`
+    }, 1000)
 }
 
 function generateEndTime(minutes){
