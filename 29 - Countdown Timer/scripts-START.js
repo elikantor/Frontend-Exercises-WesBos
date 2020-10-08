@@ -24,6 +24,7 @@ function startTimer(e, seconds) {
         secs = time % 60 > 9 ? time % 60 : '0' + time % 60
         timeLeft.innerText = `${minutes}:${secs}`
         document.title = `${minutes}:${secs}`
+        if(!time) clearInterval(interval)
     }, 1000)
 }
 
