@@ -9,9 +9,9 @@
 
     <div class="clock">
       <div class="clock-face">
-        <div class="hand hour-hand"></div>
-        <div class="hand min-hand"></div>
-        <div class="hand second-hand"></div>
+        <div class="hand hour-hand transition"></div>
+        <div class="hand min-hand transition"></div>
+        <div class="hand second-hand transition"></div>
       </div>
     </div>
 
@@ -61,11 +61,13 @@
       height: 6px;
       background: black;
       position: absolute;
-      transform-origin: 100%;
-      transform: rotate(90deg);
+      transform-origin: right;
+      top: 50%;
+    }
+
+    .transition {
       transition: all 0.5s;
       transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
-      top: 50%;
     }
 
   </style>
@@ -79,7 +81,8 @@
         const hourRotation = new Date().getHours() * 30 + 90
         const minuteRotation = new Date().getMinutes() * 6 + 90
         const secondRotation = new Date().getSeconds() * 6 + 90
-
+        if(secondRotation === 90) secHand.classList.remove('transition')
+        else secHand.classList.add('transition')
         hourHand.style.transform = `rotate(${hourRotation}deg)`
         minHand.style.transform = `rotate(${minuteRotation}deg)`
         secHand.style.transform = `rotate(${secondRotation}deg)`
