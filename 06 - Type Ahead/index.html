@@ -29,7 +29,6 @@ function handleChange(){
     let filtered = entries.filter(entry => entry.city.toLowerCase().includes(this.value) || entry.state.toLowerCase().includes(this.value))
     filtered.map(entry => {
         const li = document.createElement('li')
-        const 
         li.innerHTML = `
             <span class=hl>${entry.city}, ${entry.state}</span>
             <span class=population>${entry.population}</span>
