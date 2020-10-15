@@ -15,7 +15,31 @@
     </ul>
   </form>
 <script>
+let entries = []
+const list = document.querySelector('.suggestions')
 const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+fetch(`${endpoint}`)
+    .then(res=>res.json())
+    .then(data => entries = data)
+
+const input = document.querySelector('input')
+
+function handleChange(){
+    list.innerHTML = ''
+    let filtered = entries.filter(entry => entry.city.toLowerCase().includes(this.value) || entry.state.toLowerCase().includes(this.value))
+    filtered.map(entry => {
+        const li = document.createElement('li')
+        const 
+        li.innerHTML = `
+            <span class=hl>${entry.city}, ${entry.state}</span>
+            <span class=population>${entry.population}</span>
+        `
+        list.append(li)
+    })
+}
+
+
+input.addEventListener('keyup', handleChange)
 
 </script>
 </body>
