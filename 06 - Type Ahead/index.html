@@ -28,9 +28,12 @@ function handleChange(){
     list.innerHTML = ''
     let filtered = entries.filter(entry => entry.city.toLowerCase().includes(this.value) || entry.state.toLowerCase().includes(this.value))
     filtered.map(entry => {
+        const regex = new RegExp(this.value, 'gi')
+        const cityName = entry.city.replace(regex, `<span class='hl'>${this.value}</span>`)
+        const stateName = entry.state.replace(regex, `<span class='hl'>${this.value}</span>`)
         const li = document.createElement('li')
         li.innerHTML = `
-            <span class=hl>${entry.city}, ${entry.state}</span>
+            <span>${cityName}, ${stateName}</span>
             <span class=population>${entry.population}</span>
         `
         list.append(li)
