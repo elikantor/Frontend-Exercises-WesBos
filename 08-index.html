@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas</title>
+</head>
+<body>
+<canvas id="draw" width="800" height="800"></canvas>
+<script>
+  const canvas = document.querySelector('canvas')
+  canvas.width = window.outerWidth
+  canvas.height = window.outerHeight
+  const ctx = canvas.getContext("2d");
+  ctx.lineCap = 'round'
+  ctx.lineJoin = 'round'
+  let isDrawing = false
+  let xPrev
+  let yPrev
+  let lineWidthToggle = true
+  let color = 1
+  let colorToggle = true
+  
+  function handleRelease() {
+    isDrawing = false
+    xPrev = undefined
+    yPrev = undefined
+  }
+
+  function updateWidth() {
+    if(lineWidthToggle) {
+      if(ctx.lineWidth > 80) lineWidthToggle = false
+      return ctx.lineWidth + 1
+    } else {
+      if(ctx.lineWidth <= 1) lineWidthToggle = true
+      return ctx.lineWidth - 1
+    }
+  }
+
+  function updateColor() {
+    if(colorToggle) {
+      color += 1
+      if(color === 360) colorToggle = false
+    } else {
+      color -= 1
+      if(color < 2) colorToggle = true
+    }
+    return `hsl(${color}, 100%, 50%)`
+  }
+
+  function handleMouseMove(e) {
+    if(!isDrawing) return
+    const xCoord = e.offsetX
+    const yCoord = e.offsetY
+    if(isDrawing && xPrev) {
+      ctx.beginPath()
+      console.log(window)
+      ctx.moveTo(xPrev, yPrev)
+      ctx.lineTo(xCoord, yCoord)
+      ctx.lineWidth = updateWidth()
+      ctx.strokeStyle = updateColor()
+      ctx.stroke()
+    }
+    xPrev = xCoord
+    yPrev = yCoord
+  }
+
+
+  canvas.addEventListener('mousedown', () => isDrawing = true)
+  canvas.addEventListener('mouseup', handleRelease)
+  canvas.addEventListener('mouseout', handleRelease)
+  canvas.addEventListener('mousemove', handleMouseMove)
+</script>
+
+<style>
+  html, body {
+    margin: 0;
+  }
+</style>
+
+</body>
+</html>
