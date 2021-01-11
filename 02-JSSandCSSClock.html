@@ -6,90 +6,89 @@
 </head>
 <body>
 
-
-    <div class="clock">
-      <div class="clock-face">
-        <div class="hand hour-hand transition"></div>
-        <div class="hand min-hand transition"></div>
-        <div class="hand second-hand transition"></div>
-      </div>
+  <div class="clock">
+    <div class="clock-face">
+      <div class="hand hour-hand"></div>
+      <div class="hand min-hand"></div>
+      <div class="hand second-hand"></div>
     </div>
+  </div>
 
+<style>
+  html {
+    background: #018DED url(http://unsplash.it/1500/1000?image=881&blur=5);
+    background-size: cover;
+    font-family: 'helvetica neue';
+    text-align: center;
+    font-size: 10px;
+  }
 
-  <style>
-    html {
-      background: #018DED url(http://unsplash.it/1500/1000?image=881&blur=5);
-      background-size: cover;
-      font-family: 'helvetica neue';
-      text-align: center;
-      font-size: 10px;
-    }
+  body {
+    margin: 0;
+    font-size: 2rem;
+    display: flex;
+    flex: 1;
+    min-height: 100vh;
+    align-items: center;
+  }
 
-    body {
-      margin: 0;
-      font-size: 2rem;
-      display: flex;
-      flex: 1;
-      min-height: 100vh;
-      align-items: center;
-    }
+  .clock {
+    width: 30rem;
+    height: 30rem;
+    border: 20px solid white;
+    border-radius: 50%;
+    margin: 50px auto;
+    position: relative;
+    padding: 2rem;
+    box-shadow:
+      0 0 0 4px rgba(0,0,0,0.1),
+      inset 0 0 0 3px #EFEFEF,
+      inset 0 0 10px black,
+      0 0 10px rgba(0,0,0,0.2);
+  }
 
-    .clock {
-      width: 30rem;
-      height: 30rem;
-      border: 20px solid white;
-      border-radius: 50%;
-      margin: 50px auto;
-      position: relative;
-      padding: 2rem;
-      box-shadow:
-        0 0 0 4px rgba(0,0,0,0.1),
-        inset 0 0 0 3px #EFEFEF,
-        inset 0 0 10px black,
-        0 0 10px rgba(0,0,0,0.2);
-    }
+  .clock-face {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform: translateY(-3px); /* account for the height of the clock hands */
+  }
 
-    .clock-face {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      transform: translateY(-3px); /* account for the height of the clock hands */
-    }
-
-    .hand {
-      width: 50%;
-      height: 6px;
-      background: black;
-      position: absolute;
-      transform-origin: right;
-      top: 50%;
-    }
-
-    .transition {
-      transition: all 0.5s;
-      transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
-    }
+  .hand {
+    width: 50%;
+    height: 6px;
+    background: black;
+    position: absolute;
+    top: 50%;
+    transform: rotate(90deg);
+    transform-origin: 100%;
+    transition: all 0.5s;
+    transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
 
   </style>
 
   <script>
-      const hourHand = document.querySelector('.hour-hand')
-      const minHand = document.querySelector('.min-hand')
-      const secHand = document.querySelector('.second-hand')
-      
-      function setTime() {
-        const hourRotation = new Date().getHours() * 30 + 90
-        const minuteRotation = new Date().getMinutes() * 6 + 90
-        const secondRotation = new Date().getSeconds() * 6 + 90
-        if(secondRotation === 90) secHand.classList.remove('transition')
-        else secHand.classList.add('transition')
-        hourHand.style.transform = `rotate(${hourRotation}deg)`
-        minHand.style.transform = `rotate(${minuteRotation}deg)`
-        secHand.style.transform = `rotate(${secondRotation}deg)`
-      }
+const secondHand = document.querySelector('.second-hand')
+const minHand = document.querySelector('.min-hand')
+const hourHand = document.querySelector('.hour-hand')
 
-      setInterval(setTime, 1000)
+function rotateHands() {
+  const date = new Date()
+  const seconds = date.getSeconds()
+  const secDegrees = seconds * 6 + 90
 
+  const minute = date.getMinutes()
+  const minuteDegrees = minute * 6 + secDegrees / 60 + 90
+  const hour = date.getHours()
+  const hourDegrees = hour * 30 + minuteDegrees / 12 + 90
+
+  secondHand.style.transform = `rotate(${secDegrees}deg)`
+  minHand.style.transform = `rotate(${minuteDegrees}deg)`
+  hourHand.style.transform = `rotate(${hourDegrees}deg)`
+}
+
+setInterval(rotateHands, 1000)
 
   </script>
 </body>
